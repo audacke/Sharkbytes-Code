@@ -30,14 +30,14 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR
 TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.LightSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-// TEST 1
+
+import org.firstinspires.ftc.robotcontroller.external.samples.HardwarePushbot;
+
 /**
  * This file illustrates the concept of driving a path based on time.
  * It uses the common Pushbot hardware class to define the drive on the robot.
@@ -60,16 +60,17 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
-@Disabled
+//@Disabled
 public class Audrey_PushbotAutoDriveByTime_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */
-    HardwarePushbot         robot   = new HardwarePushbot();   // Use a Pushbot's hardware
+    HardwarePushbot robot   = new HardwarePushbot();   // Use a Pushbot's hardware
     private ElapsedTime     runtime = new ElapsedTime();
 
 
     static final double     FORWARD_SPEED = 0.6;
     static final double     TURN_SPEED    = 0.5;
+    static final double     REVERSE_SPEED = -0.6;
 
     @Override
     public void runOpMode() {
@@ -90,13 +91,33 @@ public class Audrey_PushbotAutoDriveByTime_Linear extends LinearOpMode {
         // Step through each leg of the path, ensuring that the Auto mode has not been stopped along the way
 
         // Step 1:  Drive forward for 3 seconds
-        robot.leftDrive.setPower(FORWARD_SPEED);
-        robot.rightDrive.setPower(FORWARD_SPEED);
+        robot.leftArm.setPower(FORWARD_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 3.0)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
+
+        robot.rightDrive.setPower(FORWARD_SPEED);
+        robot.leftDrive.setPower(FORWARD_SPEED);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 0.2)) {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+
+        robot.rightDrive.setPower(REVERSE_SPEED);
+        robot.leftDrive.setPower(REVERSE_SPEED);
+        runtime.reset();
+        while (opModeIsActive() && (runtime.seconds() < 3.0)) {
+            telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
+            telemetry.update();
+        }
+
+
+
+
+
 /*
         // Step 2:  Spin right for 1.3 seconds
         robot.leftDrive.setPower(TURN_SPEED);

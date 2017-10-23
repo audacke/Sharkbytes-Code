@@ -70,7 +70,6 @@ public class Audrey_PushbotAutoDriveByTime_Linear extends LinearOpMode {
 
     static final double     FORWARD_SPEED = 0.6;
     static final double     TURN_SPEED    = 0.5;
-    static final double     REVERSE_SPEED = -0.6;
 
     @Override
     public void runOpMode() {
@@ -106,17 +105,13 @@ public class Audrey_PushbotAutoDriveByTime_Linear extends LinearOpMode {
             telemetry.update();
         }
 
-        robot.rightDrive.setPower(REVERSE_SPEED);
-        robot.leftDrive.setPower(REVERSE_SPEED);
+        robot.rightDrive.setPower(-FORWARD_SPEED);
+        robot.leftDrive.setPower(-FORWARD_SPEED);
         runtime.reset();
         while (opModeIsActive() && (runtime.seconds() < 3.0)) {
             telemetry.addData("Path", "Leg 1: %2.5f S Elapsed", runtime.seconds());
             telemetry.update();
         }
-
-
-
-
 
 /*
         // Step 2:  Spin right for 1.3 seconds
